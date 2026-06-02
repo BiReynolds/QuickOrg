@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using QuickOrgRouter;
 using QuickOrgPageService;
+using QuickOrgPageFactory;
 
 namespace Server
 {
@@ -10,13 +11,15 @@ namespace Server
         readonly static string Url = "http://localhost:8000/";
         readonly static HttpListener Listener = new();
         readonly IRouter Router;
-        readonly IPageService PageService;
+        readonly IResponder Responder;
+        readonly IPageFactory PageFactory;
         bool Running = false;
 
         public MainServer(string pagesFolder, string scriptsFolder, string stylesFolder)
         {
             Router = new Router();
-            PageService = new PageService(pagesFolder, scriptsFolder, stylesFolder);
+            Responder = new PageService(pagesFolder, scriptsFolder, stylesFolder);
+            PageFactory = new PageFactory();
             Listener.Prefixes.Add(Url);
         }
 
@@ -42,7 +45,8 @@ namespace Server
                 // get page info
                 RequestInfo RequestInfo = Router.GetRequestInfoFromUrl(request.RawUrl ?? "");
                 // get rawHTML as byte[]
-                string htmlString = PageService.GetRequestedData(RequestInfo);
+                ResponseInfo responseInfo = Responder.Respond(RequestInfo);
+                string htmlString = PageFactory.Write(responseInfo);
                 byte[] buffer = Encoding.UTF8.GetBytes(htmlString);
                 // make response
                 HttpListenerResponse response = ctx.Response;

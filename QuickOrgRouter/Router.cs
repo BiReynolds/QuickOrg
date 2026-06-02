@@ -6,8 +6,6 @@ namespace QuickOrgRouter
     {
         private Dictionary<string, RequestInfo> RouteMap = new()
         {
-            {"/", new RequestInfo("index.html", RequestType.PAGE)},
-            {"/index", new RequestInfo("index.html", RequestType.PAGE)},
             {"/test", new RequestInfo("test.html", RequestType.PAGE)}
         };
         public Router() { }

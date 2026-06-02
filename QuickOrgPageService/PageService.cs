@@ -2,11 +2,17 @@ using Server;
 
 namespace QuickOrgPageService
 {
-    public class PageService : IPageService
+    public class PageService : IResponder
     {
         readonly string PagesFolder;
         readonly string ScriptsFolder;
         readonly string StylesFolder;
+        public Dictionary<RequestType, ResponseType> RequestToResponseDict = new()
+        {
+            {RequestType.PAGE, ResponseType.PAGE},
+            {RequestType.SCRIPT, ResponseType.SCRIPT},
+            {RequestType.STYLE, ResponseType.STYLE}
+        };
         public PageService(string pagesFolder, string scriptsFolder, string stylesFolder)
         {
             PagesFolder = pagesFolder;
@@ -25,6 +31,12 @@ namespace QuickOrgPageService
                 default:
                     return GetPageString(requestInfo);
             }
+        }
+
+        public ResponseInfo Respond(RequestInfo requestInfo)
+        {
+            ResponseType responseType = RequestToResponseDict[requestInfo.RequestType];
+            return new ResponseInfo(responseType, GetRequestedData(requestInfo));
         }
 
         string GetPageString(RequestInfo requestInfo)
