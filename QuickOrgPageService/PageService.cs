@@ -11,13 +11,20 @@ namespace QuickOrgPageService
         {
             {RequestType.PAGE, ResponseType.PAGE},
             {RequestType.SCRIPT, ResponseType.SCRIPT},
-            {RequestType.STYLE, ResponseType.STYLE}
+            {RequestType.STYLE, ResponseType.STYLE},
+            {RequestType.BAD_REQUEST, ResponseType.ERROR}
         };
         public PageService(string pagesFolder, string scriptsFolder, string stylesFolder)
         {
             PagesFolder = pagesFolder;
             ScriptsFolder = scriptsFolder;
             StylesFolder = stylesFolder;
+        }
+
+        public ResponseInfo Respond(RequestInfo requestInfo)
+        {
+            ResponseType responseType = RequestToResponseDict[requestInfo.RequestType];
+            return new ResponseInfo(responseType, GetRequestedData(requestInfo));
         }
 
         public string GetRequestedData(RequestInfo requestInfo)
@@ -28,15 +35,11 @@ namespace QuickOrgPageService
                     return GetScriptString(requestInfo);
                 case RequestType.STYLE:
                     return GetStyleString(requestInfo);
+                case RequestType.BAD_REQUEST:
+                    return "bad request :/";
                 default:
                     return GetPageString(requestInfo);
             }
-        }
-
-        public ResponseInfo Respond(RequestInfo requestInfo)
-        {
-            ResponseType responseType = RequestToResponseDict[requestInfo.RequestType];
-            return new ResponseInfo(responseType, GetRequestedData(requestInfo));
         }
 
         string GetPageString(RequestInfo requestInfo)

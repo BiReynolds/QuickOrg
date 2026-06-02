@@ -20,7 +20,14 @@ namespace QuickOrgRouter
                 case "css":
                     return new RequestInfo(url, RequestType.STYLE);
                 default:
-                    return RouteMap[url];
+                    try
+                    {
+                        return RouteMap[url];
+                    }
+                    catch
+                    {
+                        return new RequestInfo(url, RequestType.BAD_REQUEST);
+                    }
             }
         }
 

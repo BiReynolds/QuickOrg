@@ -17,4 +17,4 @@ CREATE TABLE Tasks (
     CONSTRAINT fk_Project
     FOREIGN KEY (ProjectId)
     REFERENCES Projects(Id)
-)
+);

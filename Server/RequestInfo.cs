@@ -35,6 +35,7 @@ namespace Server
     {
         PAGE,
         SCRIPT,
-        STYLE
+        STYLE,
+        BAD_REQUEST
     }
 }
