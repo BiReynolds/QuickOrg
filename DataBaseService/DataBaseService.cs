@@ -1,14 +1,20 @@
+using Microsoft.Data.Sqlite;
+
 namespace DataBaseService1
 {
     public class DataBaseService
     {
         private bool IsInitialized = false;
-        private string DBPath = "";
+        SqliteConnection? DBConnection;
         public DataBaseService() { }
         public void Init(string dbPath)
         {
-            DBPath = dbPath;
+            DBConnection = new("Data Source=dbPath");
             IsInitialized = true;
+        }
+
+        public void EnsureDBVersion()
+        {
         }
     }
 }
