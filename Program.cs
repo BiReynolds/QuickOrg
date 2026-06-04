@@ -1,11 +1,9 @@
-﻿using Server;
+﻿using Tests;
 
 public static class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
-        Services.DBService.Init("./Data/QuickOrgDEV.db", "./Data/Scripts");
-        MainServer server = new("./Pages", "./Pages/Scripts", "./Pages/Styles");
-        server.StartServer();
+        await ServerTests.EmptyServerTest();
     }
 }

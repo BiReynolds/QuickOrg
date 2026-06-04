@@ -1,7 +1,7 @@
 CREATE TABLE Projects (
     Id INTEGER PRIMARY KEY,
-    ProjectName TEXT NOT NULL,
     ParentId INTEGER,
+    ProjectName TEXT NOT NULL,
     TargetDate TEXT,
     Priority INTEGER DEFAULT 0,
     IsOngoing INTEGER DEFAULT 0,

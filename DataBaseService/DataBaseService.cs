@@ -1,4 +1,6 @@
 using Microsoft.Data.Sqlite;
+using Models;
+using Server;
 
 namespace DataBaseService1
 {
@@ -16,10 +18,6 @@ namespace DataBaseService1
             DBConnection = new($"Data Source={dbPath}");
             DBVersionManager.EnsureDBVersion(DBConnection, DBScriptPath);
             IsInitialized = true;
-        }
-
-        public void EnsureDBVersion()
-        {
         }
     }
 }
